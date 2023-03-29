@@ -2,6 +2,7 @@ import morgan from 'morgan';
 import express from 'express';
 import router from './routes/routes';
 import * as dotenv from 'dotenv';
+import { Database } from './configs/database';
 
 const app = express();
 
@@ -13,6 +14,10 @@ app.use(morgan('dev'));
 app.use(express.urlencoded({ extended: false }));
 // Takes care of JSON data
 app.use(express.json());
+// Database connection
+const database = new Database();
+database.connect();
+
 
 // RULES OF OUR API 
 app.use((req, res, next) => {
