@@ -1,11 +1,11 @@
 import { model, Schema, Model, Document } from 'mongoose';
-import { IRoles } from './Roles';
+import { IRole } from './Role';
 
 export interface IUser extends Document {
   name: string;
   email: string;
   password: string;
-  roles: IRoles['_id'];
+  role: IRole['_id'];
 }
 
 const userSchema: Schema = new Schema<IUser>({
@@ -28,11 +28,11 @@ const userSchema: Schema = new Schema<IUser>({
     minlength: 5,
     maxlength: 1024,
   },
-  roles: {
+  role: {
     type: Schema.Types.ObjectId,
-    ref: 'Roles',
+    ref: 't_role',
     required: true,
   },
 });
 
-export const User: Model<IUser> = model<IUser>('user', userSchema);
+export const User: Model<IUser> = model<IUser>('t_user', userSchema);

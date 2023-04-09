@@ -1,7 +1,7 @@
 import { IUser, User } from '../models/User';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import { Roles } from '../models/Roles';
+import { Role } from '../models/Role';
 
 export class UserService {
   constructor() { }
@@ -14,9 +14,9 @@ export class UserService {
 
     const newUser = new User(registerUser);
 
-    const roles = await Roles.findOne({ name: 'cliente' });
+    const role = await Role.findOne({ name: 'cliente' });
 
-    newUser.roles = roles ? roles._id : null;
+    newUser.role = role ? role._id : null;
 
     newUser.password = encryptedPassword;
 
@@ -26,7 +26,7 @@ export class UserService {
       {
         id: user._id,
         email: user.email,
-        roles: user.roles
+        role: user.role
       },
       process.env.JWT_SECRET || 'secret',
       {
@@ -38,15 +38,16 @@ export class UserService {
       id: user._id,
       name: user.name,
       email: user.email,
-      roles: user.roles,
+      role: role,
       token: token
     }
+    
     return returnUser;
   }
 
   async login(loginUser: IUser) {
 
-    const user = await User.findOne({ email: loginUser.email });
+    const user = await User.findOne({ email: loginUser.email }).populate('role');    
 
     if (!user) throw { message: 'Usuário não existe' };
 
@@ -58,7 +59,7 @@ export class UserService {
       {
         id: user._id,
         email: user.email,
-        roles: user.roles
+        role: user.role
       },
       process.env.JWT_SECRET || 'secret',
       {
@@ -70,7 +71,7 @@ export class UserService {
       id: user._id,
       name: user.name,
       email: user.email,
-      roles: user.roles,
+      role: user.role,
       token: token
     }
 

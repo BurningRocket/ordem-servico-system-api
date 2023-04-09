@@ -10,7 +10,8 @@ router.get('/findAll', async (req, res) => {
     const result = await userService.findAll();
     res.status(200).json(result);
   } catch (error: any) {
-    res.status(500).json({ error: error.message });
+    console.log(error);
+    res.status(500).json(error);
   }
 });
 
