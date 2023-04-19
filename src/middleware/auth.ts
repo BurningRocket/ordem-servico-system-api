@@ -5,17 +5,22 @@ export class AuthMiddleware {
 
   verifyToken(req: any, res: any, next: any) {
 
-    const token = req.headers['x-access-token'];
-
+    //FIXME: Not receiving the token from authorization header
+    let token = req.headers['Authorization'] || req.headers['authorization'];
+    
+    token = token.replace('Bearer ', '');
+        
     if (!token) {
-      return res.status(403).send("Um token é nescessário para validar");
+      return res.status(403).send("Um token é nescessário para validar"); 
     }
+
     try {
       const decoded = jwt.verify(token, process.env.JWT_SECRET || 'secret');
       req.user = decoded;
     } catch (err) {
       return res.status(401).send("Token inválido");
     }
+
     return next();
   }
 }
