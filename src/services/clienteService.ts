@@ -1,5 +1,7 @@
 import { Cliente, ICliente } from '../models/Cliente';
 
+  //TODO: Trocar identificador por CPF, ou CNPJ para ser mais único
+  //TODO: Adicionar hora na data
 export class ClienteService {
   constructor() { }
 

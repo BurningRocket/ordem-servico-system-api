@@ -1,21 +1,21 @@
-import { model, Schema, Model, Document } from 'mongoose';
-import { ICliente } from './Cliente';
+import { Model, Schema, model, Document } from 'mongoose';
 import { IBaseModel } from './BaseModel';
-import { StatusVisitaEnum } from './enums/statusVisitaEnum';
+import { ICliente } from './Cliente';
+import { IVisita } from './Visita';
+import { StatusOrcamentoEnum } from './enums/StatusOrcamentoEnum';
 
-//TODO: Criar um status
-export interface IVisita extends Document, IBaseModel {
+export interface IOrcamento extends Document, IBaseModel {
   cliente: ICliente['_id'];
   status: string;
-  dataVisita: Date;
-  observacao: string;
-  chegouSite: boolean;
-  notificarWpp: boolean;
+  visita?: IVisita['_id'];
+  dataOrcamento: Date;
+  observacao?: string;
   endereco: string;
+  valor: number;
   descricao?: string;
 }
 
-const visitaSchema: Schema = new Schema<IVisita>({
+const orcamentoSchema: Schema = new Schema<IOrcamento>({
   cliente: {
     type: Schema.Types.ObjectId,
     ref: 't_cliente',
@@ -24,9 +24,14 @@ const visitaSchema: Schema = new Schema<IVisita>({
   status: {
     type: String,
     required: true,
-    default: StatusVisitaEnum.PENDENTE,
+    default: StatusOrcamentoEnum.PENDENTE,
   },
-  dataVisita: {
+  visita: {
+    type: Schema.Types.ObjectId,
+    ref: 't_visita',
+    required: false,
+  },
+  dataOrcamento: {
     type: Date,
     required: true,
   },
@@ -36,20 +41,15 @@ const visitaSchema: Schema = new Schema<IVisita>({
     minlength: 5,
     maxlength: 255,
   },
-  chegouSite: {
-    type: Boolean,
-    required: true,
-  },
-  notificarWpp: {
-    type: Boolean,
-    required: true,
-    default: false,
-  },
   endereco: {
     type: String,
     required: true,
     minlength: 5,
     maxlength: 255,
+  },
+  valor: {
+    type: Number,
+    required: true,
   },
   descricao: {
     type: String,
@@ -69,4 +69,4 @@ const visitaSchema: Schema = new Schema<IVisita>({
   },
 });
 
-export const Visita: Model<IVisita> = model<IVisita>('t_visita', visitaSchema);
+export const Orcamento: Model<IOrcamento> = model<IOrcamento>('t_orcamento', orcamentoSchema);

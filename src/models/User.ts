@@ -1,7 +1,8 @@
 import { model, Schema, Model, Document } from 'mongoose';
 import { IRole } from './Role';
+import { IBaseModel } from './BaseModel';
 
-export interface IUser extends Document {
+export interface IUser extends Document, IBaseModel {
   name: string;
   email: string;
   password: string;
@@ -32,6 +33,16 @@ const userSchema: Schema = new Schema<IUser>({
     type: Schema.Types.ObjectId,
     ref: 't_role',
     required: true,
+  },
+  createdAt: {
+    type: Date,
+    required: true,
+    default: Date.now,
+  },
+  updatedAt: {
+    type: Date,
+    required: true,
+    default: Date.now,
   },
 });
 

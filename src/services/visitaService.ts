@@ -1,5 +1,6 @@
 import { IVisita, Visita } from '../models/Visita';
 import { ClienteService } from './clienteService';
+import { StatusVisitaEnum } from '../models/enums/statusVisitaEnum';
 
 export class VisitaService{
   constructor() { }
@@ -12,6 +13,8 @@ export class VisitaService{
     const newVisita = new Visita(visita);
 
     const cliente = await this.clienteService.getClienteByTelefone(visita.cliente.telefone);
+
+    newVisita.status = StatusVisitaEnum.PENDENTE;
 
     if (!cliente) {
       const clienteCreated = await this.clienteService.createCliente(visita.cliente);
@@ -26,12 +29,15 @@ export class VisitaService{
   }
 
   async getVisitas() {
-    const visitas = await Visita.find().populate('cliente');
+    const visitas = await Visita.find().populate('cliente').populate('status');
 
     return visitas;
   }
 
   async finalizarVisita(visita: IVisita) {
+    
+    visita.status = StatusVisitaEnum.FINALIZADA;
+
     const visitaSaved = await Visita.findByIdAndUpdate(visita._id, visita);
 
     return visitaSaved;

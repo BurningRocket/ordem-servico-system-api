@@ -1,6 +1,7 @@
 import { model, Schema, Model, Document } from 'mongoose';
+import { IBaseModel } from './BaseModel';
 
-export interface ICliente extends Document {
+export interface ICliente extends Document, IBaseModel {
   nome: string;
   cpf?: string;
   email?: string;
@@ -45,6 +46,16 @@ const clienteSchema: Schema = new Schema<ICliente>({
     required: false,
     minlength: 14,
     maxlength: 14,
+  },
+  createdAt: {
+    type: Date,
+    required: true,
+    default: Date.now,
+  },
+  updatedAt: {
+    type: Date,
+    required: true,
+    default: Date.now,
   },
 });
 

@@ -3,15 +3,17 @@ import { authRoutes } from './authRoutes';
 import { userRoutes } from './userRoutes';
 import { visitaRoutes } from './visitaRoutes';
 import { AuthMiddleware } from '../middleware/auth';
+import { orcamentoRoutes } from './orcamentoRoutes';
 
 const router = express.Router();
 const auth = new AuthMiddleware();
 
 router.use('/auth', authRoutes);
 
-//TODO: Add auth middleware
 router.use('/user', auth.verifyToken, userRoutes);
 
 router.use('/visita', auth.verifyToken, visitaRoutes);
+
+router.use('/orcamento', auth.verifyToken, orcamentoRoutes);
 
 export default router
