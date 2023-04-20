@@ -4,6 +4,7 @@ import { userRoutes } from './userRoutes';
 import { visitaRoutes } from './visitaRoutes';
 import { AuthMiddleware } from '../middleware/auth';
 import { orcamentoRoutes } from './orcamentoRoutes';
+import { clienteRoutes } from './clienteRoutes';
 
 const router = express.Router();
 const auth = new AuthMiddleware();
@@ -15,5 +16,7 @@ router.use('/user', auth.verifyToken, userRoutes);
 router.use('/visita', auth.verifyToken, visitaRoutes);
 
 router.use('/orcamento', auth.verifyToken, orcamentoRoutes);
+
+router.use('/cliente', auth.verifyToken, clienteRoutes);
 
 export default router
