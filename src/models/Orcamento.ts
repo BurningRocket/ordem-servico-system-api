@@ -8,7 +8,6 @@ export interface IOrcamento extends Document, IBaseModel {
   cliente: ICliente['_id'];
   visita?: IVisita['_id'];
   status: string;
-  dataOrcamento: Date;
   observacao?: string;
   endereco: string;
   valor: number;
@@ -30,10 +29,6 @@ const orcamentoSchema: Schema = new Schema<IOrcamento>({
     type: Schema.Types.ObjectId,
     ref: 't_visita',
     required: false,
-  },
-  dataOrcamento: {
-    type: Date,
-    required: true,
   },
   observacao: {
     type: String,

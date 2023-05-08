@@ -36,7 +36,7 @@ export class VisitaService{
 
   async finalizarVisita(visita: IVisita) {
     
-    visita.status = StatusVisitaEnum.FINALIZADA;
+    visita.status = StatusVisitaEnum.EXECUTADA;
 
     const visitaSaved = await Visita.findByIdAndUpdate(visita._id, visita);
 

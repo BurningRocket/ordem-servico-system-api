@@ -1,6 +1,7 @@
 import { IOrcamento, Orcamento } from '../models/Orcamento';
 import { Visita } from '../models/Visita';
 import { StatusOrcamentoEnum } from '../models/enums/StatusOrcamentoEnum';
+import { StatusVisitaEnum } from '../models/enums/statusVisitaEnum';
 import { ClienteService } from './clienteService';
 
 export class OrcamentoService{
@@ -14,7 +15,12 @@ export class OrcamentoService{
     const newOrcamento = new Orcamento(orcamento);
 
     const cliente = await this.clienteService.getClienteByTelefone(orcamento.cliente.telefone);
-    const visita = await Visita.findById(orcamento.visita._id);
+    const visita = await Visita.findById(orcamento.visita._id);    
+
+    if(visita){
+      visita.status = StatusVisitaEnum.ORCAMENTO_CRIADO;
+      visita.save()
+    }
 
     newOrcamento.status = StatusOrcamentoEnum.PENDENTE;
 
