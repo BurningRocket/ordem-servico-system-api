@@ -60,5 +60,11 @@ export class OrcamentoService{
 
     return orcamentoSaved;
   }
+
+  async getOrcamentoById(id: string) {
+    const orcamento = await Orcamento.findById(id).populate('cliente').populate('visita');
+
+    return orcamento;
+  }
   
 }
