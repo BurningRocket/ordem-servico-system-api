@@ -20,6 +20,6 @@ router.use('/orcamento', auth.verifyToken, orcamentoRoutes);
 
 router.use('/cliente', auth.verifyToken, clienteRoutes);
 
-router.use('/teste', auth.verifyToken, instalacaoRoutes);
+router.use('/instalacao', auth.verifyToken, instalacaoRoutes);
 
 export default router
