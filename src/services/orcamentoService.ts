@@ -9,8 +9,6 @@ export class OrcamentoService{
 
   clienteService = new ClienteService();
 
-    //TODO: Trocar identificador por CPF, ou CNPJ para ser mais único
-  //TODO: Adicionar hora na data
   async createOrcamento(orcamento: IOrcamento) {
     const newOrcamento = new Orcamento(orcamento);
 
@@ -18,6 +16,7 @@ export class OrcamentoService{
     const visita = await Visita.findById(orcamento.visita._id);    
 
     if(visita){
+      newOrcamento.visita = visita._id;
       visita.status = StatusVisitaEnum.ORCAMENTO_CRIADO;
       visita.save()
     }
@@ -28,10 +27,6 @@ export class OrcamentoService{
       newOrcamento.cliente = cliente._id;
     }else{
       throw { message: 'Cliente não encontrado' };
-    }
-
-    if (visita) {
-      newOrcamento.visita = visita._id;
     }
 
     const orcamentoSaved = await newOrcamento.save();
@@ -54,7 +49,7 @@ export class OrcamentoService{
   }
 
   async reprovarOrcamento(orcamento: IOrcamento) {
-    orcamento.status = StatusOrcamentoEnum.REPROVADO;
+    orcamento.status = StatusOrcamentoEnum.REPROVADO;    
     
     const orcamentoSaved = await Orcamento.findByIdAndUpdate(orcamento._id, orcamento);
 

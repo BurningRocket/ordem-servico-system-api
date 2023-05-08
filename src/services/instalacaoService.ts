@@ -3,6 +3,7 @@ import { ClienteService } from './clienteService';
 import { StatusInstalacaoEnum } from '../models/enums/statusInstalacaoEnum';
 import { OrcamentoService } from './orcamentoService';
 import { StatusOrcamentoEnum } from '../models/enums/StatusOrcamentoEnum';
+import { Orcamento } from '../models/Orcamento';
 
 export class InstalacaoService{
   constructor() { }
@@ -13,11 +14,8 @@ export class InstalacaoService{
   async createInstalacao(instalacao: IInstalacao) {
     const newInstalacao = new Instalacao(instalacao);
 
-    const orcamento = await this.orcamentoService.getOrcamentoById(instalacao.orcamento._id);
-
     const cliente = await this.clienteService.getClienteByTelefone(instalacao.cliente.telefone);
-
-    newInstalacao.status = StatusInstalacaoEnum.PENDENTE;
+    const orcamento = await Orcamento.findById(instalacao.orcamento._id);
 
     if(orcamento){
       newInstalacao.orcamento = orcamento._id;
@@ -25,11 +23,12 @@ export class InstalacaoService{
       orcamento.save();
     }
 
-    if (!cliente) {
-      const clienteCreated = await this.clienteService.createCliente(instalacao.cliente);
-      newInstalacao.cliente = clienteCreated._id;
-    } else {
+    newInstalacao.status = StatusInstalacaoEnum.PENDENTE;
+
+    if (cliente) {
       newInstalacao.cliente = cliente._id;
+    }else{
+      throw { message: 'Cliente não encontrado' };
     }
 
     const instalacaoSaved = await newInstalacao.save();
@@ -38,7 +37,7 @@ export class InstalacaoService{
   }
 
   async getInstalacaos() {
-    const instalacaos = await Instalacao.find().populate('cliente');
+    const instalacaos = await Instalacao.find().populate('cliente').populate('orcamento');
 
     return instalacaos;
   }
@@ -55,6 +54,8 @@ export class InstalacaoService{
   async faturarInstalacao(instalacao: IInstalacao) {
     
     instalacao.status = StatusInstalacaoEnum.FATURADA;
+
+    console.log(instalacao);
 
     const instalacaoSaved = await Instalacao.findByIdAndUpdate(instalacao._id, instalacao);
 
