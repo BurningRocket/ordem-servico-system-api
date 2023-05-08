@@ -40,7 +40,7 @@ export class OrcamentoService{
   }
 
   async getOrcamentos() {
-    const orcamentos = await Orcamento.find().populate('cliente').populate('status');
+    const orcamentos = await Orcamento.find().populate('cliente').populate('visita');
 
     return orcamentos;
   }

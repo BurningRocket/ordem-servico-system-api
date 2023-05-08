@@ -29,7 +29,7 @@ export class VisitaService{
   }
 
   async getVisitas() {
-    const visitas = await Visita.find().populate('cliente').populate('status');
+    const visitas = await Visita.find().populate('cliente');
 
     return visitas;
   }
