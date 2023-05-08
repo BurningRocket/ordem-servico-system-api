@@ -6,8 +6,8 @@ import { StatusOrcamentoEnum } from './enums/StatusOrcamentoEnum';
 
 export interface IOrcamento extends Document, IBaseModel {
   cliente: ICliente['_id'];
-  status: string;
   visita?: IVisita['_id'];
+  status: string;
   dataOrcamento: Date;
   observacao?: string;
   endereco: string;
