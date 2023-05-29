@@ -33,6 +33,14 @@ export class VisitaService{
     return visitas;
   }
 
+  async getOpenVisitas(){
+    const statusOpen = [StatusVisitaEnum.PENDENTE, StatusVisitaEnum.EXECUTADA];
+
+    const visitas = await Visita.find({status: { $in: statusOpen }}).populate('cliente');
+
+    return visitas;
+  }
+
   async finalizarVisita(visita: IVisita) {
     
     visita.status = StatusVisitaEnum.EXECUTADA;
