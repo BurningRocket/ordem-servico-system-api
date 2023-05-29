@@ -19,7 +19,7 @@ export class InstalacaoService{
 
     if(orcamento){
       newInstalacao.orcamento = orcamento._id;
-      orcamento.status = StatusOrcamentoEnum.INSTALACAO_CRIADA;
+      orcamento.status = StatusOrcamentoEnum.INSTALACAO_AGENDADA;
       orcamento.save();
     }
 
