@@ -31,6 +31,12 @@ export class ClienteService {
     return cliente;
   }
 
+  async getClienteByCpf(cpf: string) {
+    const cliente  = await Cliente.findOne({ cpf: cpf });
+
+    return cliente;
+  }
+
   async updateCliente(id: string, cliente: ICliente) {
     const clienteToUpdate = await this.getClienteById(id);
 

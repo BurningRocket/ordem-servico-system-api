@@ -7,12 +7,11 @@ export class VisitaService{
 
   clienteService = new ClienteService();
 
-  //TODO: Trocar identificador por CPF, ou CNPJ para ser mais único
   //TODO: Adicionar hora na data
   async createVisita(visita: IVisita) {
     const newVisita = new Visita(visita);
 
-    const cliente = await this.clienteService.getClienteByTelefone(visita.cliente.telefone);
+    const cliente = await this.clienteService.getClienteByCpf(visita.cliente.cpf);
 
     newVisita.status = StatusVisitaEnum.PENDENTE;
 
