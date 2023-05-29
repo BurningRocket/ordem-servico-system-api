@@ -12,6 +12,7 @@ export interface IOrcamento extends Document, IBaseModel {
   endereco: string;
   valor: number;
   descricao?: string;
+  tipoPagamento?: string;
 }
 
 const orcamentoSchema: Schema = new Schema<IOrcamento>({
@@ -61,6 +62,12 @@ const orcamentoSchema: Schema = new Schema<IOrcamento>({
     type: Date,
     required: true,
     default: Date.now,
+  },
+  tipoPagamento: {
+    type: String,
+    required: false,
+    minlength: 5,
+    maxlength: 255,
   },
 });
 
