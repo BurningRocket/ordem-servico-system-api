@@ -25,4 +25,24 @@ router.get('/findAll', async (req, res) => {
   }
 });
 
+router.get('/findInstaladores', async (req, res) => {
+  try {
+    const result = await profissionalService.getInstaladores();
+    res.status(200).json(result);
+  } catch (error: any) {
+    console.log(error);
+    res.status(500).json(error);
+  }
+});
+
+router.get('/findVistoriadores', async (req, res) => {
+  try {
+    const result = await profissionalService.getVistoriadores();
+    res.status(200).json(result);
+  } catch (error: any) {
+    console.log(error);
+    res.status(500).json(error);
+  }
+});
+
 export const profissionalRoute = router;

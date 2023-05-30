@@ -16,4 +16,17 @@ export class ProfissionalService{
 
     return profissionais;
   }
+
+  async getInstaladores() {
+    const profissionais = await Profissional.find({instalador: true});
+
+    return profissionais;
+  }
+
+  async getVistoriadores() {
+    const profissionais = await Profissional.find({vistoriador: true});
+
+    return profissionais;
+  }
+
 }

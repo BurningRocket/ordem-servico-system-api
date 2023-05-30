@@ -28,7 +28,7 @@ export class VisitaService{
   }
 
   async getVisitas() {
-    const visitas = await Visita.find().populate('cliente');
+    const visitas = await Visita.find().populate('cliente').populate('profissional');
 
     return visitas;
   }
@@ -36,7 +36,7 @@ export class VisitaService{
   async getOpenVisitas(){
     const statusOpen = [StatusVisitaEnum.PENDENTE, StatusVisitaEnum.EXECUTADA];
 
-    const visitas = await Visita.find({status: { $in: statusOpen }}).populate('cliente');
+    const visitas = await Visita.find({status: { $in: statusOpen }}).populate('cliente').populate('profissional');
 
     return visitas;
   }
