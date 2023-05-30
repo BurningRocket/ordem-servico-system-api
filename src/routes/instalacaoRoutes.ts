@@ -25,6 +25,16 @@ router.get('/findAll', async (req, res) => {
   }
 });
 
+router.get('/findAllOpen', async (req, res) => {
+  try {
+    const result = await instalacaoService.getInstalacaosOpen();
+    res.status(200).json(result);
+  } catch (error: any) {
+    console.log(error);
+    res.status(500).json(error);
+  }
+});
+
 router.put('/finalizar', async (req, res) => {
   try {
     const result = await instalacaoService.finalizarInstalacao(req.body);

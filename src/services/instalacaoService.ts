@@ -42,6 +42,12 @@ export class InstalacaoService{
     return instalacaos;
   }
 
+  async getInstalacaosOpen(){
+    const instalacaos = await Instalacao.find({status: StatusInstalacaoEnum.PENDENTE}).populate('cliente').populate('orcamento');
+
+    return instalacaos;
+  }
+
   async finalizarInstalacao(instalacao: IInstalacao) {
     
     instalacao.status = StatusInstalacaoEnum.EXECUTADA;
