@@ -13,8 +13,8 @@ export interface IInstalacao extends Document, IBaseModel {
   observacao: string;
   endereco: string;
   descricao?: string;
-  tipoPagamento?: string;
   quantidadeCaixas?: number;
+  statusPagamento?: string;
 }
 
 const instalacaoSchema: Schema = new Schema<IInstalacao>({
@@ -65,15 +65,14 @@ const instalacaoSchema: Schema = new Schema<IInstalacao>({
     required: true,
     default: Date.now,
   },
-  tipoPagamento: {
-    type: String,
-    required: false,
-    minlength: 5,
-    maxlength: 255,
-  },
   quantidadeCaixas: {
     type: Number,
     required: false,
+  },
+  statusPagamento: {
+    type: String,
+    required: false,
+    enum: ['SIM', 'NÃO', 'PENDENTE'],
   },
 });
 
