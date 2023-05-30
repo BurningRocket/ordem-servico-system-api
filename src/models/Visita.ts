@@ -4,7 +4,6 @@ import { IBaseModel } from './BaseModel';
 import { StatusVisitaEnum } from './enums/statusVisitaEnum';
 import { IProfissional } from './Profissional';
 
-//TODO: Criar um status
 export interface IVisita extends Document, IBaseModel {
   cliente: ICliente['_id'];
   profissional: IProfissional['_id'];

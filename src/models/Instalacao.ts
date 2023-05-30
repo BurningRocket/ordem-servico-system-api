@@ -3,11 +3,12 @@ import { ICliente } from './Cliente';
 import { IBaseModel } from './BaseModel';
 import { StatusInstalacaoEnum } from './enums/statusInstalacaoEnum';
 import { IOrcamento } from './Orcamento';
+import { IProfissional } from './Profissional';
 
-//TODO: Criar um status
 export interface IInstalacao extends Document, IBaseModel {
   cliente: ICliente['_id'];
   orcamento: IOrcamento['_id'];
+  profissional: IProfissional['_id'];
   status: string;
   dataInstalacao: [Date, Date];
   observacao: string;
@@ -26,6 +27,11 @@ const instalacaoSchema: Schema = new Schema<IInstalacao>({
   orcamento: {
     type: Schema.Types.ObjectId,
     ref: 't_orcamento',
+    required: true,
+  },
+  profissional: {
+    type: Schema.Types.ObjectId,
+    ref: 't_profissional',
     required: true,
   },
   status: {

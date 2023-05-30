@@ -7,7 +7,6 @@ export class VisitaService{
 
   clienteService = new ClienteService();
 
-  //TODO: Adicionar hora na data
   async createVisita(visita: IVisita) {
     const newVisita = new Visita(visita);
 

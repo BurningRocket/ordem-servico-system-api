@@ -37,13 +37,13 @@ export class InstalacaoService{
   }
 
   async getInstalacaos() {
-    const instalacaos = await Instalacao.find().populate('cliente').populate('orcamento');
+    const instalacaos = await Instalacao.find().populate('cliente').populate('orcamento').populate('profissional');
 
     return instalacaos;
   }
 
   async getInstalacaosOpen(){
-    const instalacaos = await Instalacao.find({status: StatusInstalacaoEnum.PENDENTE}).populate('cliente').populate('orcamento');
+    const instalacaos = await Instalacao.find({status: StatusInstalacaoEnum.PENDENTE}).populate('cliente').populate('orcamento').populate('profissional');
 
     return instalacaos;
   }
