@@ -40,6 +40,14 @@ export class OrcamentoService{
     return orcamentos;
   }
 
+  async getOrcamentosOpen(){
+    const statusOpen = [StatusOrcamentoEnum.PENDENTE, StatusOrcamentoEnum.APROVADO];
+
+    const orcamentos = await Orcamento.find({status: { $in: statusOpen }}).populate('cliente').populate('visita');
+
+    return orcamentos;
+  }
+
   async aprovarOrcamento(orcamento: IOrcamento) {
     orcamento.status = StatusOrcamentoEnum.APROVADO;
     
