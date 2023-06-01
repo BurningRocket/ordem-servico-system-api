@@ -48,5 +48,28 @@ export class VisitaService{
 
     return visitaSaved;
   }
+
+  async getTotalVisitasMes(){
+    const statusFinished = [StatusVisitaEnum.EXECUTADA, StatusVisitaEnum.ORCAMENTO_CRIADO];
+
+    const visitas = await Visita.find({status: { $in: statusFinished }, createdAt: { $gte: new Date(new Date().getFullYear(), new Date().getMonth(), 1) }});
+
+    return visitas.length;
+  }
+
+  async getTotalVisitasMesAnterior(){
+    const statusFinished = [StatusVisitaEnum.EXECUTADA, StatusVisitaEnum.ORCAMENTO_CRIADO];
+
+    const visitas = await Visita.find({status: { $in: statusFinished }, createdAt: { $gte: new Date(new Date().getFullYear(), new Date().getMonth() - 1, 1), $lte: new Date(new Date().getFullYear(), new Date().getMonth(), 0) }});
+
+    return visitas.length;
+  }
   
+  async getExecutadasAno(){
+    const statusFinished = [StatusVisitaEnum.EXECUTADA, StatusVisitaEnum.ORCAMENTO_CRIADO];
+
+    const visitas = await Visita.find({status: { $in: statusFinished }, createdAt: { $gte: new Date(new Date().getFullYear(), 0, 1), $lte: new Date(new Date().getFullYear(), 11, 31) }});
+
+    return visitas;
+  }
 }

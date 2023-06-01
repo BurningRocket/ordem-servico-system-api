@@ -69,5 +69,39 @@ export class OrcamentoService{
 
     return orcamento;
   }
+
+  async getTotalOrcamentosMes(){
+    const statusFinished = [StatusOrcamentoEnum.APROVADO, StatusOrcamentoEnum.INSTALACAO_AGENDADA];
+
+    const orcamentos = await Orcamento.find({status: { $in: statusFinished }, createdAt: { $gte: new Date(new Date().getFullYear(), new Date().getMonth(), 1) }});
+
+  const valorTotalOrcamentos = orcamentos.reduce((total, orcamento) => total + orcamento.valor, 0);
+
+    return valorTotalOrcamentos;
+  }
+
+  async getTotalOrcamentosMesAnterior(){
+    const statusFinished = [StatusOrcamentoEnum.APROVADO, StatusOrcamentoEnum.INSTALACAO_AGENDADA];
+
+    const orcamentos = await Orcamento.find({status: { $in: statusFinished }, createdAt: { $gte: new Date(new Date().getFullYear(), new Date().getMonth() -1, 1), $lte: new Date(new Date().getFullYear(), new Date().getMonth(), 0)  }});
+
+    const valorTotalOrcamentos = orcamentos.reduce((total, orcamento) => total + orcamento.valor, 0);
+
+    return valorTotalOrcamentos;
+  }
+
+  async getTotalOrcamentosReprovadosMes(){
+    const orcamentos = await Orcamento.find({status: StatusOrcamentoEnum.REPROVADO, createdAt: { $gte: new Date(new Date().getFullYear(), new Date().getMonth(), 1) }});
+
+    return orcamentos.length;
+  }
   
+  async getAprovadosAno(){
+    const statusFinished = [StatusOrcamentoEnum.APROVADO, StatusOrcamentoEnum.INSTALACAO_AGENDADA];
+
+    const orcamentos = await Orcamento.find({status: { $in: statusFinished }, createdAt: { $gte: new Date(new Date().getFullYear(), 0, 1), $lte: new Date(new Date().getFullYear(), 11, 31)  }});
+
+    return orcamentos;
+  }
+
 }

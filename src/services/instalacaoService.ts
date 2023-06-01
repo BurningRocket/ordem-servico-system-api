@@ -68,4 +68,55 @@ export class InstalacaoService{
     return instalacaoSaved;
   }
   
+  async getTotalInstalacoesMes(){
+    const statusFinished = [StatusInstalacaoEnum.EXECUTADA, StatusInstalacaoEnum.FATURADA];
+
+    const instalacoes = await Instalacao.find({status: { $in: statusFinished }, createdAt: { $gte: new Date(new Date().getFullYear(), new Date().getMonth(), 1) }});
+
+    return instalacoes.length;
+  }
+
+  async getTotalInstalacoesMesAnterior(){
+    const statusFinished = [StatusInstalacaoEnum.EXECUTADA, StatusInstalacaoEnum.FATURADA];
+
+    const instalacoes = await Instalacao.find({status: { $in: statusFinished }, createdAt: { $gte: new Date(new Date().getFullYear(), new Date().getMonth() - 1, 1), $lte: new Date(new Date().getFullYear(), new Date().getMonth(), 0) }});
+
+    return instalacoes.length;
+  }
+
+  async getTotalCaixasInstaladasMes(){
+    const statusFinished = [StatusInstalacaoEnum.EXECUTADA, StatusInstalacaoEnum.FATURADA];
+
+    const instalacoes = await Instalacao.find({status: { $in: statusFinished }, createdAt: { $gte: new Date(new Date().getFullYear(), new Date().getMonth(), 1) }});
+
+    let totalCaixas = 0;
+
+    instalacoes.forEach(instalacao => {
+      totalCaixas += instalacao.quantidadeCaixas ? instalacao.quantidadeCaixas : 0;
+    });
+
+    return totalCaixas;
+  }
+
+  async getTotalCaixasInstaladasMesAnterior(){
+    const statusFinished = [StatusInstalacaoEnum.EXECUTADA, StatusInstalacaoEnum.FATURADA];
+
+    const instalacoes = await Instalacao.find({status: { $in: statusFinished }, createdAt: { $gte: new Date(new Date().getFullYear(), new Date().getMonth() - 1, 1), $lte: new Date(new Date().getFullYear(), new Date().getMonth(), 0) }});
+
+    let totalCaixas = 0;
+
+    instalacoes.forEach(instalacao => {
+      totalCaixas += instalacao.quantidadeCaixas ? instalacao.quantidadeCaixas : 0;
+    });
+
+    return totalCaixas;
+  }
+  
+  async getExecutadasAno(){
+    const statusFinished = [StatusInstalacaoEnum.EXECUTADA, StatusInstalacaoEnum.FATURADA];
+
+    const instalacoes = await Instalacao.find({status: { $in: statusFinished }, createdAt: { $gte: new Date(new Date().getFullYear(), 0, 1), $lte: new Date(new Date().getFullYear(), 11, 31) }});
+
+    return instalacoes;
+  }
 }
