@@ -34,14 +34,10 @@ const orcamentoSchema: Schema = new Schema<IOrcamento>({
   observacao: {
     type: String,
     required: false,
-    minlength: 5,
-    maxlength: 255,
   },
   endereco: {
     type: String,
     required: true,
-    minlength: 5,
-    maxlength: 255,
   },
   valor: {
     type: Number,
@@ -50,8 +46,6 @@ const orcamentoSchema: Schema = new Schema<IOrcamento>({
   descricao: {
     type: String,
     required: false,
-    minlength: 5,
-    maxlength: 255,
   },
   createdAt: {
     type: Date,
@@ -66,8 +60,6 @@ const orcamentoSchema: Schema = new Schema<IOrcamento>({
   tipoPagamento: {
     type: String,
     required: false,
-    minlength: 5,
-    maxlength: 255,
   },
 });
 

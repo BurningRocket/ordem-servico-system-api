@@ -46,20 +46,14 @@ const instalacaoSchema: Schema = new Schema<IInstalacao>({
   observacao: {
     type: String,
     required: false,
-    minlength: 5,
-    maxlength: 255,
   },
   endereco: {
     type: String,
     required: true,
-    minlength: 5,
-    maxlength: 255,
   },
   descricao: {
     type: String,
     required: false,
-    minlength: 5,
-    maxlength: 255,
   },
   createdAt: {
     type: Date,
