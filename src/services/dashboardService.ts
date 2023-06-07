@@ -23,7 +23,7 @@ export class DashboardService{
     const totalCaixasMesAnterior = await this.instalacaoService.getTotalCaixasInstaladasMesAnterior();
     const totalVisitasMesAnterior = await this.visitaService.getTotalVisitasMesAnterior();
 
-    const diferencaOrcamentosMesAnterior = totalOrcamentosMesAnterior > 0 ? (((totalOrcamentosMes - totalOrcamentosMesAnterior) / totalOrcamentosMesAnterior) * 100).toFixed() : 0;
+    const diferencaOrcamentosMesAnterior = totalOrcamentosMes - totalOrcamentosMesAnterior;
     const diferencaInstalacoesMesAnterior = totalInstalacoesMes - totalInstalacoesMesAnterior;
     const diferencaVisitasMesAnterior = totalVisitasMes - totalVisitasMesAnterior;
     const diferencaCaixasMesAnterior = totalCaixasMes - totalCaixasMesAnterior;

@@ -75,9 +75,7 @@ export class OrcamentoService{
 
     const orcamentos = await Orcamento.find({status: { $in: statusFinished }, createdAt: { $gte: new Date(new Date().getFullYear(), new Date().getMonth(), 1) }});
 
-  const valorTotalOrcamentos = orcamentos.reduce((total, orcamento) => total + orcamento.valor, 0);
-
-    return valorTotalOrcamentos;
+    return orcamentos.length;
   }
 
   async getTotalOrcamentosMesAnterior(){
@@ -85,9 +83,7 @@ export class OrcamentoService{
 
     const orcamentos = await Orcamento.find({status: { $in: statusFinished }, createdAt: { $gte: new Date(new Date().getFullYear(), new Date().getMonth() -1, 1), $lte: new Date(new Date().getFullYear(), new Date().getMonth(), 0)  }});
 
-    const valorTotalOrcamentos = orcamentos.reduce((total, orcamento) => total + orcamento.valor, 0);
-
-    return valorTotalOrcamentos;
+    return orcamentos.length;
   }
 
   async getTotalOrcamentosReprovadosMes(){
