@@ -39,8 +39,6 @@ const visitaSchema: Schema = new Schema<IVisita>({
   observacao: {
     type: String,
     required: false,
-    minlength: 5,
-    maxlength: 255,
   },
   formaContato: {
     type: String,
