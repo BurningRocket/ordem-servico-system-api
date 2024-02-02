@@ -2,7 +2,7 @@
   "name": "wpp_integration_api",
   "version": "1.0.0",
   "description": "",
-  "main": "server.js",
+  "main": "./src/server.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon src/server.ts",
@@ -36,6 +36,7 @@
     "@types/jsonwebtoken": "^9.0.1",
     "rimraf": "^3.0.2",
     "serverless": "^3.38.0",
+    "serverless-dotenv-plugin": "^6.0.0",
     "serverless-plugin-typescript": "^2.1.5"
   }
 }
