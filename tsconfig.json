@@ -7,6 +7,12 @@
       "rootDir": "./src",
       "target": "es6",
       "skipLibCheck": true,
-      "strict": true
+      "strict": true,
+      "preserveConstEnums": true,
+      "strictNullChecks": true,
+      "sourceMap": true,
+      "allowJs": true,
+      "moduleResolution": "node",
+      "lib": ["es2015"],
   }
 }

@@ -1,0 +1,19 @@
+service: os-cemig
+ 
+provider:
+  name: aws
+  runtime: nodejs18.x
+  stage: dev
+  region: us-east-1
+  memorySize: 128
+  timeout: 30
+
+plugins:
+  - serverless-plugin-typescript
+ 
+functions:
+  app:
+    handler: index.handler
+    events:
+      - http: ANY /
+      - http: 'ANY {proxy+}'

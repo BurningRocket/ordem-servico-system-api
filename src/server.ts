@@ -3,7 +3,7 @@ import express from 'express';
 import router from './routes/routes';
 import * as dotenv from 'dotenv';
 import { Database } from './configs/database';
-import cors from 'cors';
+import ServerlessHttp from 'serverless-http';
 
 const app = express();
 
@@ -36,15 +36,6 @@ app.use((req, res, next) => {
     next();
 });
 
-// RULES OF OUR API
-// app.use(cors({
-//     "origin": "*",
-//     "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
-//     "allowedHeaders": ['Access-Control-Allow-Headers', 'origin, X-Requested-With, Content-Type, Accept, Authorization'],
-//     "preflightContinue": true,
-//     "optionsSuccessStatus": 200
-// }));
-
 //Routes
 app.use('/api', router);
 
@@ -61,6 +52,4 @@ app.use((req, res, next) => {
 });
 
 // Server
-app.listen(process.env.PORT, () => {
-    console.log(`Server is running on port ${process.env.PORT}`);
-});
+module.exports.handler = ServerlessHttp(app);
