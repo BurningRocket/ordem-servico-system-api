@@ -43,14 +43,20 @@ export class InstalacaoService{
   }
 
   async getInstalacaosOpen(){
-    const instalacaos = await Instalacao.find({status: StatusInstalacaoEnum.PENDENTE}).populate('cliente').populate('orcamento').populate('profissional');
+    const statusAberto = [StatusInstalacaoEnum.PENDENTE, StatusInstalacaoEnum.EXECUTADA];
+
+    const instalacaos = await Instalacao.find({status: { $in: statusAberto } }).populate('cliente').populate('orcamento').populate('profissional');
 
     return instalacaos;
   }
 
   async finalizarInstalacao(instalacao: IInstalacao) {
     
-    instalacao.status = StatusInstalacaoEnum.EXECUTADA;
+    if(instalacao.statusPagamento?.toUpperCase() == 'SIM'){
+      instalacao.status = StatusInstalacaoEnum.FATURADA;
+    }else{
+      instalacao.status = StatusInstalacaoEnum.EXECUTADA;
+    }
 
     const instalacaoSaved = await Instalacao.findByIdAndUpdate(instalacao._id, instalacao);
 
@@ -61,7 +67,7 @@ export class InstalacaoService{
     
     instalacao.status = StatusInstalacaoEnum.FATURADA;
 
-    console.log(instalacao);
+    instalacao.statusPagamento = 'SIM';
 
     const instalacaoSaved = await Instalacao.findByIdAndUpdate(instalacao._id, instalacao);
 
