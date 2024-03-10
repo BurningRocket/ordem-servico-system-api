@@ -18,7 +18,7 @@ const userSchema: Schema = new Schema<IUser>({
   email: {
     type: String,
     required: true,
-    minlength: 5,
+    minlength: 4,
     maxlength: 255,
     unique: true,
   },
@@ -31,8 +31,6 @@ const userSchema: Schema = new Schema<IUser>({
   role: {
     type: String,
     required: true,
-    minlength: 5,
-    maxlength: 1024,
   },
   createdAt: {
     type: Date,

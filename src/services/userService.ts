@@ -14,7 +14,20 @@ export class UserService {
 
     const newUser = new User(registerUser);
 
-    newUser.role = UserRoleEnum.BASE;
+    switch (registerUser.role) {
+      case UserRoleEnum.ROOT:
+        newUser.role = UserRoleEnum.ROOT;
+        break;
+      case UserRoleEnum.ADMIN:
+        newUser.role = UserRoleEnum.ADMIN;
+        break;
+      case UserRoleEnum.PROFISSIONAL:
+        newUser.role = UserRoleEnum.PROFISSIONAL;
+        break;
+      default:
+        newUser.role = UserRoleEnum.BASE;
+        break;
+    }
 
     newUser.password = encryptedPassword;
 
