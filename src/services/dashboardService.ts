@@ -2,6 +2,7 @@ import { ClienteService } from './clienteService';
 import { OrcamentoService } from './orcamentoService';
 import { InstalacaoService } from './instalacaoService';
 import { VisitaService } from './visitaService';
+import { IDashboardDto } from '../models/DashboardDto';
 
 export class DashboardService{
   constructor() { }
@@ -13,6 +14,7 @@ export class DashboardService{
   visitaService = new VisitaService();
 
   async getDashboard(){
+
     const totalOrcamentosMes = await this.orcamentoService.getTotalOrcamentosMes();
     const totalInstalacoesMes = await this.instalacaoService.getTotalInstalacoesMes();
     const totalCaixasMes = await this.instalacaoService.getTotalCaixasInstaladasMes();
@@ -57,7 +59,7 @@ export class DashboardService{
       geralAnoVisitas.push(totalVisitas);
     }
 
-    return {
+    const DashboardDto: IDashboardDto = {
       totalOrcamentosMes,
       totalInstalacoesMes,
       totalVisitasMes,
@@ -72,5 +74,7 @@ export class DashboardService{
       geralAnoInstalacoes,
       geralAnoVisitas
     }
+
+    return DashboardDto;
   }
 }
