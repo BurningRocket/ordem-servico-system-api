@@ -1,7 +1,7 @@
 import { IUser, User } from '../models/User';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import { Role } from '../models/Role';
+import { UserRoleEnum } from '../models/enums/userRoleEnum';
 
 export class UserService {
   constructor() { }
@@ -14,9 +14,20 @@ export class UserService {
 
     const newUser = new User(registerUser);
 
-    const role = await Role.findOne({ name: 'cliente' });
-
-    newUser.role = role ? role._id : null;
+    switch (registerUser.role) {
+      case UserRoleEnum.ROOT:
+        newUser.role = UserRoleEnum.ROOT;
+        break;
+      case UserRoleEnum.ADMIN:
+        newUser.role = UserRoleEnum.ADMIN;
+        break;
+      case UserRoleEnum.PROFISSIONAL:
+        newUser.role = UserRoleEnum.PROFISSIONAL;
+        break;
+      default:
+        newUser.role = UserRoleEnum.BASE;
+        break;
+    }
 
     newUser.password = encryptedPassword;
 
@@ -38,7 +49,7 @@ export class UserService {
       id: user._id,
       name: user.name,
       email: user.email,
-      role: role,
+      role: user.role,
       token: token
     }
     
@@ -47,7 +58,7 @@ export class UserService {
 
   async login(loginUser: IUser) {
 
-    const user = await User.findOne({ email: loginUser.email }).populate('role');    
+    const user = await User.findOne({ email: loginUser.email });    
 
     if (!user) throw { message: 'Usuário não existe' };
 

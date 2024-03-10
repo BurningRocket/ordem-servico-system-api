@@ -1,12 +1,11 @@
 import { model, Schema, Model, Document } from 'mongoose';
-import { IRole } from './Role';
 import { IBaseModel } from './BaseModel';
 
 export interface IUser extends Document, IBaseModel {
   name: string;
   email: string;
   password: string;
-  role: IRole['_id'];
+  role: string;
 }
 
 const userSchema: Schema = new Schema<IUser>({
@@ -19,7 +18,7 @@ const userSchema: Schema = new Schema<IUser>({
   email: {
     type: String,
     required: true,
-    minlength: 5,
+    minlength: 4,
     maxlength: 255,
     unique: true,
   },
@@ -30,8 +29,7 @@ const userSchema: Schema = new Schema<IUser>({
     maxlength: 1024,
   },
   role: {
-    type: Schema.Types.ObjectId,
-    ref: 't_role',
+    type: String,
     required: true,
   },
   createdAt: {
