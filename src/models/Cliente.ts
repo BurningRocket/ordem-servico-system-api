@@ -8,6 +8,8 @@ export interface ICliente extends Document, IBaseModel {
   telefone: string;
   endereco: string;
   cnpj?: string;
+  notificarWhatsapp: boolean;
+  etapaWhatsapp?: string;
 }
 
 const clienteSchema: Schema = new Schema<ICliente>({
@@ -56,6 +58,17 @@ const clienteSchema: Schema = new Schema<ICliente>({
     type: Date,
     required: true,
     default: Date.now,
+  },
+  notificarWhatsapp: {
+    type: Boolean,
+    required: true,
+    default: false,
+  },
+  etapaWhatsapp: {
+    type: String,
+    required: false,
+    minlength: 3,
+    maxlength: 50,
   },
 });
 

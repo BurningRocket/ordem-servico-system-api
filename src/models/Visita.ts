@@ -11,7 +11,6 @@ export interface IVisita extends Document, IBaseModel {
   dataVisita: Date;
   observacao: string;
   formaContato: string;
-  notificarWpp: boolean;
   endereco: string;
   descricao?: string;
 }
@@ -44,11 +43,6 @@ const visitaSchema: Schema = new Schema<IVisita>({
     type: String,
     required: true,
     enum: ['SITE', 'BALCÃO', 'TELEFONE'],
-  },
-  notificarWpp: {
-    type: Boolean,
-    required: true,
-    default: false,
   },
   endereco: {
     type: String,

@@ -1,6 +1,7 @@
 import { IVisita, Visita } from '../models/Visita';
 import { ClienteService } from './clienteService';
 import { StatusVisitaEnum } from '../models/enums/statusVisitaEnum';
+import { EtapaWhatsappEnum } from '../models/enums/etapaWhatsappEnum';
 
 export class VisitaService{
   constructor() { }
@@ -13,6 +14,10 @@ export class VisitaService{
     const cliente = await this.clienteService.getClienteByCpf(visita.cliente.cpf);
 
     newVisita.status = StatusVisitaEnum.PENDENTE;
+
+    if(cliente?.notificarWhatsapp){
+      cliente.etapaWhatsapp = EtapaWhatsappEnum.AVISO_VISTORIA_24H_CLIENTE;
+    }
 
     if (!cliente) {
       const clienteCreated = await this.clienteService.createCliente(visita.cliente);
@@ -65,6 +70,7 @@ export class VisitaService{
     return visitas.length;
   }
   
+
   async getExecutadasAno(){
     const statusFinished = [StatusVisitaEnum.EXECUTADA, StatusVisitaEnum.ORCAMENTO_CRIADO];
 

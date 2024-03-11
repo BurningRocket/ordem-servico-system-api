@@ -1,6 +1,7 @@
 import { IOrcamento, Orcamento } from '../models/Orcamento';
 import { Visita } from '../models/Visita';
 import { StatusOrcamentoEnum } from '../models/enums/StatusOrcamentoEnum';
+import { EtapaWhatsappEnum } from '../models/enums/etapaWhatsappEnum';
 import { StatusVisitaEnum } from '../models/enums/statusVisitaEnum';
 import { ClienteService } from './clienteService';
 
@@ -15,12 +16,6 @@ export class OrcamentoService{
     const cliente = await this.clienteService.getClienteByTelefone(orcamento.cliente.telefone);
     const visita = await Visita.findById(orcamento.visita._id);    
 
-    if(visita){
-      newOrcamento.visita = visita._id;
-      visita.status = StatusVisitaEnum.ORCAMENTO_CRIADO;
-      visita.save()
-    }
-
     newOrcamento.status = StatusOrcamentoEnum.PENDENTE;
 
     if (cliente) {
@@ -30,6 +25,17 @@ export class OrcamentoService{
     }
 
     const orcamentoSaved = await newOrcamento.save();
+
+    if(visita){
+      newOrcamento.visita = visita._id;
+      visita.status = StatusVisitaEnum.ORCAMENTO_CRIADO;
+      visita.save()
+    }
+
+    if(cliente?.notificarWhatsapp){
+      cliente.etapaWhatsapp = EtapaWhatsappEnum.CONFIRMACAO_ORCAMENTO;
+      cliente.save();
+    }
 
     return orcamentoSaved;
   }
