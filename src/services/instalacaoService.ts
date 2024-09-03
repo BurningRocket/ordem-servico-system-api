@@ -36,6 +36,18 @@ export class InstalacaoService{
     return instalacaoSaved;
   }
 
+  async updateInstalacao(instalacao: IInstalacao) {
+    const instalacaoSaved = await Instalacao.findByIdAndUpdate(instalacao._id, instalacao);
+
+    return instalacaoSaved;
+  }
+
+  async deleteInstalacao(instalacaoId: string) {
+    const instalacaoDeleted = await Instalacao.findByIdAndDelete(instalacaoId);
+
+    return instalacaoDeleted;
+  }
+
   async getInstalacaos() {
     const instalacaos = await Instalacao.find().populate('cliente').populate('orcamento').populate('profissional');
 
