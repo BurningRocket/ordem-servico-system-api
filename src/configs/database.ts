@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 export class Database {
   constructor() { }
 
-  private uri = `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@${process.env.MONGO_HOST}?retryWrites=true&w=majority`;
+  private uri = process.env.MONGODB_URI || "mongodb://localhost:27017/express-mongoose";
 
   connect = () => {
     mongoose

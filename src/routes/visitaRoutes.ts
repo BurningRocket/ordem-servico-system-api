@@ -15,6 +15,16 @@ router.post('/create', async (req, res) => {
   }
 });
 
+router.patch('/update', async (req, res) => {
+  try {
+      const result = await visitaService.updateVisita(req.body);
+      res.status(200).json(result);
+  } catch (error: any) {
+      console.log(error);
+      res.status(500).json(error);
+  }
+});
+
 router.get('/findAll', async (req, res) => {
   try {
     const result = await visitaService.getVisitas();
@@ -43,6 +53,16 @@ router.put('/finalizar', async (req, res) => {
     console.log(error);
     res.status(500).json(error);
   }
+});
+
+router.delete('/delete/:id', async (req, res) => {
+    try {
+        const result = await visitaService.deleteVisita(req.params.id);
+        res.status(200).json(result);
+    } catch (error: any) {
+        console.log(error);
+        res.status(500).json(error);
+    }
 });
 
 export const visitaRoutes = router;

@@ -72,4 +72,16 @@ export class VisitaService{
 
     return visitas;
   }
+
+  async updateVisita(visita: IVisita) {
+    const visitaUpdated = await Visita.findByIdAndUpdate(visita._id, visita);
+
+    return visitaUpdated;
+  }
+
+  async deleteVisita(visitaId: string) {
+    const visitaDeleted = await Visita.findByIdAndDelete(visitaId);
+
+    return visitaDeleted;
+  }
 }
