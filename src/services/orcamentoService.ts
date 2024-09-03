@@ -34,6 +34,18 @@ export class OrcamentoService{
     return orcamentoSaved;
   }
 
+  async updateOrcamento(orcamento: IOrcamento) {
+    const orcamentoSaved = await Orcamento.findByIdAndUpdate(orcamento._id, orcamento);
+
+    return orcamentoSaved;
+  }
+
+  async deleteOrcamento(id: string) {
+    const orcamento = await Orcamento.findByIdAndDelete(id);
+
+    return orcamento;
+  }
+
   async getOrcamentos() {
     const orcamentos = await Orcamento.find().populate('cliente').populate('visita');
 
